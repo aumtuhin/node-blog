@@ -10,6 +10,6 @@ exports.register = () => {
     
 }
 
-exports.home = () => {
-    
+exports.home = (req, res) => {
+    res.render('home-guest');
 }
