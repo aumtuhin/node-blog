@@ -1,6 +1,5 @@
-body, .tooltip
- {
-  font-family: 'Open Sans', sans-serif;
+body, .tooltip {
+  font-family: 'Roboto Condensed', sans-serif;
 }
 
 .header-bar {
