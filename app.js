@@ -1,4 +1,5 @@
 const  express = require('express');
+
 // intit app
 const app = express();  
 // routes
@@ -16,6 +17,4 @@ app.set('views', 'views');
 
 app.use('/', router);
 
-app.listen(8080, () => {
-    console.log('app is listening on port 8080');
-});
+module.exports = app;

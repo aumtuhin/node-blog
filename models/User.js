@@ -53,7 +53,7 @@ User.prototype.validate = function () {
 }
 
 User.prototype.register = function () {
-    // this.cleanUp();
+    this.cleanUp();
     this.validate();
 }
 
