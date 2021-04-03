@@ -1,8 +1,11 @@
-const app = require('./app');
-const MongoClient = require('mongodb').MongoClient;
-const uri = "mongodb+srv://tuhin:test54321@cluster0.qerog.mongodb.net/node-blog?retryWrites=true&w=majority";
-const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-client.connect(err => {
+const mongodb = require('mongodb');
+const config = require('./config/dbConfig');
+const uri = config.dbUri;
+mongodb.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
+    if (err) {
+        console.log(err);
+    }
     module.exports = client.db();
+    const app = require('./app');
     app.listen(8080);
 });
