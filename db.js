@@ -1,7 +1,7 @@
+const dotenv = require('dotenv');
+dotenv.config();
 const mongodb = require('mongodb');
-const config = require('./config/dbConfig');
-const uri = config.dbUri;
-mongodb.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
+mongodb.connect(process.env.CONNECTIONSTRING, { useNewUrlParser: true, useUnifiedTopology: true }, (err, client) => {
     if (err) {
         console.log(err);
     }
