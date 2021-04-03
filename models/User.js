@@ -6,8 +6,8 @@ let User = function (data) {
     this.errors = [];
 }
 
-User.prototype.cleanUp = function() {
-    if (typeof(this.data.username) != "string") this.data.username = "";
+User.prototype.cleanUp = function () {
+    if (typeof (this.data.username) != "string") this.data.username = "";
     if (typeof (this.data.password) != "string") this.data.password = "";
     if (typeof (this.data.email) != "string") this.data.email = "";
 
@@ -31,12 +31,23 @@ User.prototype.validate = function () {
     if (this.data.username.length > 30) this.errors.push('Username can not exceed 30 charecters');
 }
 
+User.prototype.login = function() {
+    this.cleanUp();
+    usersCollection.findOne({ username: this.data.username }, (err, user) => {
+        if (user && user.password == this.data.password) {
+            console.log('Congrats');
+        } else {
+            console.log('Invalid username and pass');
+        }
+    });
+}
+
 User.prototype.register = function () {
     this.cleanUp();
     this.validate();
 
     // if there are no validation errors
-    if(!this.errors.length) {
+    if (!this.errors.length) {
         usersCollection.insertOne(this.data);
     }
 }
