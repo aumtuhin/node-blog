@@ -3,6 +3,7 @@ const User = require('../models/User');
 exports.login = (req, res) => {
     let user = new User(req.body);
     user.login().then((result) => {
+        req.session.user = { user: user.data.username }
         res.send(result)
     }).catch((err) => {
         res.send(err);
@@ -24,5 +25,9 @@ exports.register = (req, res) => {
 }
 
 exports.home = (req, res) => {
-    res.render('home-guest');
+    if (req.session.user) {
+        res.send("Werlcome to the actual app");
+    } else {
+        res.render('home-guest');
+    }
 }

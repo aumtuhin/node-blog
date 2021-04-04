@@ -1,20 +1,35 @@
-const  express = require('express');
-
+const express = require('express');
+const session = require('express-session');
+const MongoStore = require('connect-mongo');
 // intit app
-const app = express();  
-// routes
-const router = require('./router');
+const app = express();
 
-app.use(express.urlencoded({extended: false}));
+//session middleware and configurations
+let sessionOptions = session({
+    secret: "this is something for making our session cool",
+    store: new MongoStore({ client: require('./db') }),
+    resave: false,
+    saveUninitialized: false,
+    cookie: { maxAge: 1000 * 60 * 60 * 24, httpOnly: true }
+});
+
+app.use(sessionOptions);
+
+// express bodyprser middleware
+app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 //set up views folder
 app.set('views', 'views');
- //view engine
- app.set('view engine', 'ejs');
- //statci files
- app.use(express.static('public'));
+//view engine
+app.set('view engine', 'ejs');
+//statci files
+app.use(express.static('public'));
 
+// require all routes
+const router = require('./router');
+
+//routes
 app.use('/', router);
 
 module.exports = app;

@@ -5,7 +5,7 @@ mongodb.connect(process.env.CONNECTIONSTRING, { useNewUrlParser: true, useUnifie
     if (err) {
         console.log(err);
     }
-    module.exports = client.db();
+    module.exports = client;
     const app = require('./app');
     app.listen(process.env.PORT);
 });
