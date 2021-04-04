@@ -17,6 +17,11 @@ let sessionOptions = session({
 app.use(sessionOptions);
 app.use(flash());
 
+app.use((req, res, next) => {
+    res.locals.user = req.session.user;
+    next();
+});
+
 // express bodyprser middleware
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
