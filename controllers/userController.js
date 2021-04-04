@@ -8,7 +8,10 @@ exports.login = (req, res) => {
             res.redirect('/');
         });
     }).catch((err) => {
-        res.send(err);
+        req.flash('errors', err);
+        req.session.save(() => {
+            res.redirect('/');
+        });
     });
 }
 
@@ -34,6 +37,6 @@ exports.home = (req, res) => {
             username: req.session.user.username
         });
     } else {
-        res.render('home-guest');
+        res.render('home-guest', { errors: req.flash('errors') });
     }
 }

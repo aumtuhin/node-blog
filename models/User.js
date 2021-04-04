@@ -39,7 +39,7 @@ User.prototype.login = function () {
             if (user && bycrypt.compareSync(this.data.password, user.password)) {
                 resolve("Congrats");
             } else {
-                reject("Invalid email and password");
+                reject("Invalid username or password");
             }
         }).catch((err) => {
             reject("Please again letare");
