@@ -72,7 +72,6 @@ exports.ifUserExits = function(req, res, next) {
 }
 
 exports.profilePostsScreen = function(req, res) {
-
     // get post from post collection by login usernam
     Post.findByAuthorId(req.profileUser._id).then((posts) => {
         res.render('profile', {

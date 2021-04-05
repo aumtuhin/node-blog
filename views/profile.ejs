@@ -1,29 +1,26 @@
 <%- include('includes/header') %>
 <div class="container py-md-5 container--narrow">
-    <h2><img class="avatar-small" src="<%= profileAvatar%>"> <%= profileUsername %> 
-      <form class="ml-2 d-inline" action="#" method="POST">
-        <button class="btn btn-primary btn-sm">Follow <i class="fas fa-user-plus"></i></button>
-        <!-- <button class="btn btn-danger btn-sm">Stop Following <i class="fas fa-user-times"></i></button> -->
-      </form>
-    </h2>
-  
-    <div class="profile-nav nav nav-tabs pt-2 mb-4">
-      <a href="#" class="profile-nav-link nav-item nav-link ">Posts: 3</a>
-      <a href="#" class="profile-nav-link nav-item nav-link active">Followers: 3</a>
-      <a href="#" class="profile-nav-link nav-item nav-link ">Following: 2</a>
-    </div>
-  
-    <div class="list-group">
-      <a href="#" class="list-group-item list-group-item-action">
-        <img class="avatar-tiny" src="https://gravatar.com/avatar/b9216295c1e3931655bae6574ac0e4c2?s=128"> User 1
-      </a>
-      <a href="#" class="list-group-item list-group-item-action">
-        <img class="avatar-tiny" src="https://gravatar.com/avatar/b9216295c1e3931655bae6574ac0e4c2?s=128"> User 2
-      </a>
-      <a href="#" class="list-group-item list-group-item-action">
-        <img class="avatar-tiny" src="https://gravatar.com/avatar/b9216295c1e3931655bae6574ac0e4c2?s=128"> User 3
-      </a>
-    </div>
+  <h2><img class="avatar-small" src="<%= profileAvatar %>"> <%= profileUsername %> 
+    <form class="ml-2 d-inline" action="#" method="POST">
+      <button class="btn btn-primary btn-sm">Follow <i class="fas fa-user-plus"></i></button>
+      <!-- <button class="btn btn-danger btn-sm">Stop Following <i class="fas fa-user-times"></i></button> -->
+    </form>
+  </h2>
+
+  <div class="profile-nav nav nav-tabs pt-2 mb-4">
+    <a href="#" class="profile-nav-link nav-item nav-link active">Posts: 3</a>
+    <a href="#" class="profile-nav-link nav-item nav-link ">Followers: 3</a>
+    <a href="#" class="profile-nav-link nav-item nav-link ">Following: 2</a>
   </div>
+
+  <div class="list-group">
+    <% posts.forEach(function(post) { %>
+      <a href="/post/<%= post._id %>" class="list-group-item list-group-item-action">
+        <img class="avatar-tiny" src="<%= post.author.avatar %>">
+        <strong><%= post.title %></strong> on <%= post.createdDate.getMonth() + 1; %>/<%= post.createdDate.getDay() %>/<%= post.createdDate.getFullYear()%>
+      </a>
+    <% }); %>
+  </div>
+</div>
 
   <%- include('includes/footer') %>
