@@ -20,6 +20,6 @@ exports.viewSingle = async function(req, res) {
       post: post
     });
   } catch {
-    res.send('404 template goes here');
+    res.render('404');
   }
 }
