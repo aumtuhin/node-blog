@@ -1,5 +1,5 @@
 const User = require('../models/User');
-
+const Post = require('../models/Post');
 
 exports.mustBeLoogedIn = function(req, res, next) {
     if(req.session.user) {
@@ -60,4 +60,27 @@ exports.home = (req, res) => {
             regErrors: req.flash('regErrors')
         });
     }
+}
+
+exports.ifUserExits = function(req, res, next) {
+    User.findByUsername(req.params.username).then((userDocument) => {
+        req.profileUser = userDocument;
+        next();
+    }).catch(() => {
+        res.render('404');
+    });
+}
+
+exports.profilePostsScreen = function(req, res) {
+
+    // get post from post collection by login usernam
+    Post.findByAuthorId(req.profileUser._id).then((posts) => {
+        res.render('profile', {
+            profileUsername: req.profileUser.username,
+            profileAvatar: req.profileUser.avatar,
+            posts: posts
+        });
+    }).catch(() => {
+        res.render('404');
+    });
 }

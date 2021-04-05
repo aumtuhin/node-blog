@@ -6,10 +6,10 @@ const md5 = require('md5');
 let User = function (data, getAvatar) {
     this.data = data;
     this.errors = [];
-    if(getAvatar == undefined) {
+    if (getAvatar == undefined) {
         getAvatar = false;
     }
-    if(getAvatar) {
+    if (getAvatar) {
         this.getAvatar();
     }
 }
@@ -84,7 +84,7 @@ User.prototype.register = function () {
             let salt = bycrypt.genSaltSync(10);
             this.data.password = bycrypt.hashSync(this.data.password, salt);
             await usersCollection.insertOne(this.data);
-            this.getAvatar(); 
+            this.getAvatar();
             resolve();
         } else {
             reject(this.errors);
@@ -92,9 +92,32 @@ User.prototype.register = function () {
     });
 }
 
-User.prototype.getAvatar = function() {
-    
+User.prototype.getAvatar = function () {
     this.avatar = `https://gravatar.com/avatar/b7${md5(this.data.email)}?s=400&d=robohash&r=x`;
+}
+
+User.findByUsername = function (username) {
+    return new Promise((resolve, reject) => {
+        if (typeof (username) != "string") {
+            reject();
+            return;
+        }
+        usersCollection.findOne({ username: username }).then((userDoc) => {
+            if (userDoc) {
+                userDoc = new User(userDoc, true);
+                userDoc = {
+                    _id: userDoc.data._id,
+                    username: userDoc.data.username,
+                    avatar: userDoc.avatar
+                }
+                resolve(userDoc);
+            } else {
+                reject();
+            }
+        }).catch(() => {
+            reject();
+        });
+    });
 }
 
 module.exports = User;
