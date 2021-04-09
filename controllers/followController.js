@@ -1,7 +1,7 @@
-exports.follow = () => {
+exports.follow = (req, res) => {
 
 }
 
-exports.unfollow = () => {
+exports.unfollow = (req, res) => {
     
 }
